@@ -1,9 +1,17 @@
 services:
   - type: web
-    name: ridego-small-uber
+    name: ridego-flask
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
       - key: SECRET_KEY
         generateValue: true
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: ridego-data
+      mountPath: /var/data
+      sizeGB: 1

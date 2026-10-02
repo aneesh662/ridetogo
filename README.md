@@ -1,55 +1,25 @@
-# RideGo — Small Uber-style Flask system
+# RideGo - Small Uber Style Taxi Booking System
 
-Roles:
-- User: select pickup/drop-off, GPS, route distance, fare, book, watch confirmation.
-- Rider: go online, receive matching vehicle requests, accept, start, complete.
-- Admin: manage vehicle base fare, per-km fare, booking fee, view bookings.
+Flask + SQLite + Bootstrap + JavaScript + Leaflet/OpenStreetMap.
 
-## Demo
-Admin: admin@ridego.local / admin123
-Rider: rider@ridego.local / rider123
+## Roles
+- User: sign up, choose pickup/drop directly on map, automatic road distance/fare, book ride, see Rider confirmation.
+- Rider: created by Admin, login, go online, share GPS, accept/start/complete rides.
+- Admin: create/delete Riders, set vehicle fares, view users/rides/revenue.
 
-Create a normal User account from Register.
-
-## Automatic location and distance
-- Browser Geolocation API supplies the user's current GPS after permission.
-- Nominatim searches/reverse-geocodes addresses.
-- OSRM calculates road distance and duration.
-- Leaflet displays the map.
-
-Geolocation requires permission and secure contexts (HTTPS or localhost). Public Nominatim/OSRM services have usage policies; for production, use a provider/account designed for your traffic.
-
-## Local
-python -m venv venv
-venv\Scripts\activate
+## Local run
+```bash
+python -m venv .venv
+# Windows: .venv\\Scripts\\activate
+# macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 python app.py
+```
+Open http://127.0.0.1:5000
 
-## GitHub
-git init
-git add .
-git commit -m "RideGo small Uber system"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/ridego-small-uber.git
-git push -u origin main
+Default Admin: admin@ridego.com / admin123
 
 ## Render
-Connect the GitHub repo.
-Build: pip install -r requirements.txt
-Start: gunicorn app:app
+The included render.yaml configures Gunicorn and a persistent disk for SQLite. Render's normal filesystem is ephemeral, so persistent storage is required if SQLite data must survive restarts/deploys. For a larger production system, use managed PostgreSQL instead.
 
-SQLite is included for learning/prototyping. For production, use PostgreSQL by setting DATABASE_URL.
-
-## Important production upgrades
-- WebSocket/SSE notifications instead of 5-second polling
-- Dedicated geocoding/routing API with key and quotas
-- PostgreSQL
-- OTP authentication
-- CSRF protection
-- rate limiting
-- payment gateway
-- driver verification/KYC
-- cancellation rules
-- surge pricing
-- trip audit logs
-- push/SMS/WhatsApp notifications
+Push this folder to GitHub and create a Render Web Service from the repository.
