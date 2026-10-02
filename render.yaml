@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ridego-taxi
+    name: ridego-small-uber
     runtime: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
